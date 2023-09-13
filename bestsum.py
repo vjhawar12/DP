@@ -1,24 +1,23 @@
 # write a program that returns how a target sum can be generated using the least number of numbers 
 # numbers possible from an inputted array
 
-
-def bestsum(target, nums, dic={}):
+def bestsum(target, nums, dic):
+    if target in dic:
+        return dic[target]
     if target == 0:
         return []
     if target < 0:
         return None
-    if target in dic:
-        return dic[target]
-
+    
     shortest = None
     for i in nums:
-        result = bestsum(target - i, nums)
-        
+        result = bestsum(target - i, nums, dic)
         if result != None:
             result.append(i)
-            if shortest == None or len(result) < len(shortest):
+            if shortest == None or len(result) < len(shortest): 
                 shortest = result
     
+    dic[target] = shortest
     return shortest
 
 print(bestsum(10, [2, 5], {}))
